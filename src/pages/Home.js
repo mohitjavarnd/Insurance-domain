@@ -1,57 +1,3 @@
-// import React, { useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
-// import { useSelector ,useDispatch} from 'react-redux';
-// import { fetchPolicies } from '../store/policiesSlice';
-// import { useNavigate } from 'react-router-dom';
-// import PolicyCard from '../component/PolicyCard';
-// import { doc, getDoc, updateDoc } from 'firebase/firestore'; 
-// import { toast } from 'react-toastify';
-// import { db, auth } from '../config/firebase';
-
-// function Home() {
-//   const dispatch = useDispatch();
-//     const policies = useSelector((state) => state.policies.policies.slice(0, 6));
-    
-//     const status = useSelector((state) => state.policies.status);
-//     const navigate = useNavigate();
-//     const user = auth.currentUser; 
-//     useEffect(() => {
-//       dispatch(fetchPolicies());
-//     }, [dispatch]);
-
-//     const handleBuyNowClick = (policy) => {
-//       if (!user) { 
-//         navigate(`/SignIn`); 
-//       } else {
-//         const policyId = policy.id;
-//         console.log(policyId);
-//         navigate(`/CheckoutPage/${policyId}`);
-//       }
-//     };
-
-//     const handleAddToCompareClick = async (policyId) => {
-//         if (user) {
-//           const uid = user.uid;
-//           const userRef = doc(db, 'users', uid);
-    
-//           try {
-//             const userSnapshot = await getDoc(userRef);
-//             const userData = userSnapshot.data();
-    
-//             const updatedCompareList = [...userData.compare, policyId];
-    
-//             await updateDoc(userRef, { compare: updatedCompareList });
-    
-//             console.log('Policy added to compare list');
-//             toast.success('Added to Compare Section')
-//           } catch (error) {
-//             console.error('Error updating user data:', error);
-//             toast.error("Can't add to compare policy section please try later")
-//           }
-//         } else {
-//           console.error('No user is currently logged in');
-//         }
-//       };
 import { usePolicyActions } from '../custom-hooks/usePolicyActions';
 import {  Link } from 'react-router-dom';
 import PolicyCard from '../component/PolicyCard';
@@ -66,6 +12,7 @@ function Home() {
   } = usePolicyActions();
 
       const user = auth.currentUser;
+      const limitedPolicies = policies.slice(0, 6);
 
     return (
         <div>
@@ -94,7 +41,7 @@ function Home() {
       ) : (
         <>
           <div className="row">
-            {policies.map((policy) => (
+            {limitedPolicies.map((policy) => (
               <PolicyCard
                 key={policy.id}
                 policy={policy}
