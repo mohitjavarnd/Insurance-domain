@@ -3,8 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { auth } from '../config/firebase';
-import { toast } from 'react-toastify';
+import { auth } from '../config/firebase';x
 import { useNavigate } from 'react-router-dom';
 
 const validationSchema = Yup.object().shape({
